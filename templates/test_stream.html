@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP32-CAM Face Recognition Live Test</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        .test-container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        .test-console {
+            background: #090d16;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 16px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: #10b981;
+            height: 180px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+        .log-entry {
+            margin-bottom: 6px;
+        }
+        .log-entry.warn { color: #f59e0b; }
+        .log-entry.info { color: #60a5fa; }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+            <div>
+                <h1 style="font-size: 24px; font-weight: 800;">
+                    <i class="bi bi-broadcast" style="color: var(--accent-primary);"></i>
+                    ESP32-CAM Face Recognition Test
+                </h1>
+                <p style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">
+                    Direct Stream: <code>{{ camera_source }}</code> | Tolerance: <code>0.45</code>
+                </p>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <a href="/" class="btn btn-secondary btn-sm">
+                    <i class="bi bi-grid-1x2-fill"></i> Main Dashboard
+                </a>
+                <a href="/register" class="btn btn-primary btn-sm">
+                    <i class="bi bi-person-plus-fill"></i> Add Face
+                </a>
+            </div>
+        </div>
+
+        <div class="glass-card" style="padding: 16px;">
+            <div class="camera-container" style="max-height: 520px;">
+                <img src="/video_feed" alt="Live Annotated Stream" class="camera-feed" id="testStreamImg">
+                <div class="camera-hud">
+                    <div class="hud-left">
+                        <div class="status-badge">
+                            <span class="status-dot online"></span>
+                            <span>LIVE RECOGNITION</span>
+                        </div>
+                        <div class="hud-metric">Green = Recognized (Confidence %)</div>
+                        <div class="hud-metric">Red = Unknown</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-console" id="testConsole">
+            <div class="log-entry info">[SYSTEM] Connected to ESP32-CAM stream: {{ camera_source }}</div>
+            <div class="log-entry info">[AI ENGINE] HOG Face Detector active with 0.45 tolerance matching</div>
+            <div class="log-entry">[STREAM] Awaiting face recognition events...</div>
+        </div>
+    </div>
+
+    <script>
+        // Listen to live events
+        const evtSource = new EventSource('/api/stream/events');
+        const consoleEl = document.getElementById('testConsole');
+
+        evtSource.onmessage = function(e) {
+            try {
+                const data = JSON.parse(e.data);
+                if (data.type === 'attendance_marked') {
+                    const line = document.createElement('div');
+                    line.className = 'log-entry';
+                    line.textContent = `[${new Date().toLocaleTimeString()}] RECOGNIZED: ${data.data.name} (Attendance recorded)`;
+                    consoleEl.appendChild(line);
+                    consoleEl.scrollTop = consoleEl.scrollHeight;
+                } else if (data.type === 'unknown_face') {
+                    const line = document.createElement('div');
+                    line.className = 'log-entry warn';
+                    line.textContent = `[${new Date().toLocaleTimeString()}] UNKNOWN FACE detected in camera view`;
+                    consoleEl.appendChild(line);
+                    consoleEl.scrollTop = consoleEl.scrollHeight;
+                }
+            } catch (err) {}
+        };
+    </script>
+</body>
+</html>

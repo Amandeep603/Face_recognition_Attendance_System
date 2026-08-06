@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Analytics - AI Face Attendance</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        .analytics-kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .charts-row-2 {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+        .charts-row-equal {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+        .chart-box {
+            position: relative;
+            height: 280px;
+            width: 100%;
+        }
+        @media (max-width: 1024px) {
+            .charts-row-2, .charts-row-equal {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-wrapper">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-icon">
+                    <i class="bi bi-person-bounding-box"></i>
+                </div>
+                <div class="brand-info">
+                    <h2>Face Attendance</h2>
+                    <span class="brand-badge">AI Powered</span>
+                </div>
+            </div>
+
+            <ul class="nav-menu">
+                <li>
+                    <a href="/" class="nav-link">
+                        <i class="bi bi-grid-1x2-fill"></i>
+                        <span>Live Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/register" class="nav-link">
+                        <i class="bi bi-person-plus-fill"></i>
+                        <span>Add Student</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/students" class="nav-link">
+                        <i class="bi bi-people-fill"></i>
+                        <span>Student Directory</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/analytics" class="nav-link active">
+                        <i class="bi bi-graph-up-arrow"></i>
+                        <span>Analytics</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/unknown_faces" class="nav-link">
+                        <i class="bi bi-person-exclamation"></i>
+                        <span>Unknown Faces</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/reports" class="nav-link">
+                        <i class="bi bi-file-earmark-bar-graph-fill"></i>
+                        <span>Reports</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/diagnostics" class="nav-link">
+                        <i class="bi bi-cpu-fill"></i>
+                        <span>System Test</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <a href="/" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: center;">
+                    <i class="bi bi-arrow-left"></i> Live Stream Feed
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="topbar">
+                <div class="page-title">
+                    <h1>Attendance Analytics & Insights</h1>
+                    <p>Real-time attendance trends, punctuality rankings, spoof defense & system health</p>
+                </div>
+                <div class="topbar-actions">
+                    <a href="/reports" class="btn btn-secondary">
+                        <i class="bi bi-download"></i> Export Reports
+                    </a>
+                </div>
+            </header>
+
+            <!-- Top KPI Cards -->
+            <div class="analytics-kpi-grid">
+                <div class="kpi-card glass-card">
+                    <div class="kpi-icon" style="background: rgba(99, 102, 241, 0.15); color: var(--accent-primary);">
+                        <i class="bi bi-people-fill"></i>
+                    </div>
+                    <div class="kpi-info">
+                        <span class="kpi-title">Total Enrolled</span>
+                        <h3 class="kpi-value" id="kpiTotalStudents">--</h3>
+                    </div>
+                </div>
+
+                <div class="kpi-card glass-card">
+                    <div class="kpi-icon" style="background: rgba(16, 185, 129, 0.15); color: var(--success);">
+                        <i class="bi bi-person-check-fill"></i>
+                    </div>
+                    <div class="kpi-info">
+                        <span class="kpi-title">Present Today</span>
+                        <h3 class="kpi-value" id="kpiPresentToday">--</h3>
+                        <span style="font-size: 11px; color: var(--success); font-weight: 600;" id="kpiAttendancePct">--%</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card glass-card">
+                    <div class="kpi-icon" style="background: rgba(239, 68, 68, 0.15); color: var(--danger);">
+                        <i class="bi bi-person-x-fill"></i>
+                    </div>
+                    <div class="kpi-info">
+                        <span class="kpi-title">Absent Today</span>
+                        <h3 class="kpi-value" id="kpiAbsentToday">--</h3>
+                    </div>
+                </div>
+
+                <div class="kpi-card glass-card">
+                    <div class="kpi-icon" style="background: rgba(245, 158, 11, 0.15); color: var(--warning);">
+                        <i class="bi bi-stopwatch-fill"></i>
+                    </div>
+                    <div class="kpi-info">
+                        <span class="kpi-title">Most Punctual</span>
+                        <h3 class="kpi-value" style="font-size: 16px;" id="kpiMostPunctual">--</h3>
+                    </div>
+                </div>
+
+                <div class="kpi-card glass-card">
+                    <div class="kpi-icon" style="background: rgba(139, 92, 246, 0.15); color: var(--accent-secondary);">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+                    <div class="kpi-info">
+                        <span class="kpi-title">Spoofs Defended</span>
+                        <h3 class="kpi-value" id="kpiSpoofsBlocked">--</h3>
+                    </div>
+                </div>
+
+                <div class="kpi-card glass-card">
+                    <div class="kpi-icon" style="background: rgba(6, 182, 212, 0.15); color: #06b6d4;">
+                        <i class="bi bi-hdd-network-fill"></i>
+                    </div>
+                    <div class="kpi-info">
+                        <span class="kpi-title">Storage Used</span>
+                        <h3 class="kpi-value" style="font-size: 16px;" id="kpiStorage">-- MB</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Row 1: Attendance Trend & Biometric Defense -->
+            <div class="charts-row-2">
+                <div class="glass-card" style="padding: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <h3 style="font-size: 15px; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+                            <i class="bi bi-activity" style="color: var(--accent-primary);"></i> Attendance Trend
+                        </h3>
+                        <div style="display: flex; gap: 6px;">
+                            <button class="btn btn-secondary btn-sm active" id="btnTrend7" onclick="loadTrendData(7)">7 Days</button>
+                            <button class="btn btn-secondary btn-sm" id="btnTrend30" onclick="loadTrendData(30)">30 Days</button>
+                        </div>
+                    </div>
+                    <div class="chart-box">
+                        <canvas id="trendChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="glass-card" style="padding: 20px;">
+                    <h3 style="font-size: 15px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+                        <i class="bi bi-pie-chart-fill" style="color: var(--accent-secondary);"></i> System Defense & Accuracy
+                    </h3>
+                    <div class="chart-box">
+                        <canvas id="defenseChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Row 2: Hourly Arrival Distribution & Student Rankings -->
+            <div class="charts-row-equal">
+                <div class="glass-card" style="padding: 20px;">
+                    <h3 style="font-size: 15px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+                        <i class="bi bi-clock-history" style="color: var(--warning);"></i> Hourly Check-in Distribution (Today)
+                    </h3>
+                    <div class="chart-box">
+                        <canvas id="hourlyChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="glass-card" style="padding: 20px;">
+                    <h3 style="font-size: 15px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+                        <i class="bi bi-bar-chart-fill" style="color: var(--success);"></i> Student Attendance Breakdown (30 Days)
+                    </h3>
+                    <div class="chart-box">
+                        <canvas id="studentBarChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chronic Absentees Table -->
+            <div class="glass-card" style="padding: 20px;">
+                <h3 style="font-size: 15px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+                    <i class="bi bi-exclamation-triangle-fill" style="color: var(--danger);"></i> Students Requiring Attention (&lt;75% Attendance)
+                </h3>
+                <div style="overflow-x: auto;">
+                    <table class="attendance-table" id="chronicAbsenteesTable">
+                        <thead>
+                            <tr>
+                                <th>Student Name</th>
+                                <th>Days Present</th>
+                                <th>Total Working Days</th>
+                                <th>Attendance Rate</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="chronicAbsenteesBody">
+                            <tr><td colspan="5" style="text-align: center; color: var(--text-muted);">Loading records...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/static/js/analytics.js"></script>
+</body>
+</html>

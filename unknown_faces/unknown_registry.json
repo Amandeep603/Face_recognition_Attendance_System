@@ -1,0 +1,52 @@
+[
+  {
+    "id": "unk_20260806_005",
+    "date": "2026-08-06",
+    "time": "17:59:02",
+    "filename": "unknown_005.jpg",
+    "relative_url": "/unknown_photo/2026-08-06/unknown_005.jpg",
+    "confidence": 37.8,
+    "status": "unresolved",
+    "timestamp": 1786019342.9160044
+  },
+  {
+    "id": "unk_20260806_004",
+    "date": "2026-08-06",
+    "time": "17:58:55",
+    "filename": "unknown_004.jpg",
+    "relative_url": "/unknown_photo/2026-08-06/unknown_004.jpg",
+    "confidence": 42.3,
+    "status": "unresolved",
+    "timestamp": 1786019335.299066
+  },
+  {
+    "id": "unk_20260806_003",
+    "date": "2026-08-06",
+    "time": "17:56:16",
+    "filename": "unknown_003.jpg",
+    "relative_url": "/unknown_photo/2026-08-06/unknown_003.jpg",
+    "confidence": 35.5,
+    "status": "unresolved",
+    "timestamp": 1786019176.4765682
+  },
+  {
+    "id": "unk_20260806_002",
+    "date": "2026-08-06",
+    "time": "17:56:07",
+    "filename": "unknown_002.jpg",
+    "relative_url": "/unknown_photo/2026-08-06/unknown_002.jpg",
+    "confidence": 35.8,
+    "status": "unresolved",
+    "timestamp": 1786019167.142383
+  },
+  {
+    "id": "unk_20260806_001",
+    "date": "2026-08-06",
+    "time": "17:56:01",
+    "filename": "unknown_001.jpg",
+    "relative_url": "/unknown_photo/2026-08-06/unknown_001.jpg",
+    "confidence": 33.4,
+    "status": "unresolved",
+    "timestamp": 1786019161.6846411
+  }
+]

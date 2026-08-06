@@ -1,0 +1,53 @@
+[2026-08-06 17:55:25] [WARNING] Recognized student 'OM' pending liveness verification (Checking Liveness...)
+[2026-08-06 17:55:28] [WARNING] Recognized student 'OM' pending liveness verification (Checking Liveness...)
+[2026-08-06 17:55:29] [WARNING] Recognized student 'OM' pending liveness verification (Checking Liveness...)
+[2026-08-06 17:55:30] [WARNING] Recognized student 'OM' pending liveness verification (Spoof Detected)
+[2026-08-06 17:55:32] [WARNING] Recognized student 'OM' pending liveness verification (Spoof Detected)
+[2026-08-06 17:55:33] [WARNING] Recognized student 'OM' pending liveness verification (Spoof Detected)
+[2026-08-06 17:55:34] [WARNING] Recognized student 'OM' pending liveness verification (Spoof Detected)
+[2026-08-06 17:55:36] [WARNING] Recognized student 'OM' pending liveness verification (Checking Liveness...)
+[2026-08-06 17:55:37] [WARNING] Recognized student 'OM' pending liveness verification (Checking Liveness...)
+[2026-08-06 17:55:39] [INFO] Recognized student 'OM' (Confidence: 64.7%, Dist: 0.317) - Live Verified
+[2026-08-06 17:55:40] [INFO] Recognized student 'OM' (Confidence: 64.7%, Dist: 0.317) - Live Verified
+[2026-08-06 17:55:42] [INFO] Recognized student 'OM' (Confidence: 64.7%, Dist: 0.317) - Live Verified
+[2026-08-06 17:55:44] [INFO] Recognized student 'OM' (Confidence: 64.7%, Dist: 0.317) - Live Verified
+[2026-08-06 17:55:45] [INFO] Recognized student 'OM' (Confidence: 64.7%, Dist: 0.317) - Live Verified
+[2026-08-06 17:55:47] [INFO] Recognized student 'OM' (Confidence: 64.7%, Dist: 0.317) - Live Verified
+[2026-08-06 17:55:48] [INFO] Recognized student 'OM' (Confidence: 64.7%, Dist: 0.317) - Live Verified
+[2026-08-06 17:55:49] [INFO] Recognized student 'OM' (Confidence: 64.7%, Dist: 0.317) - Live Verified
+[2026-08-06 17:55:51] [INFO] Recognized student 'OM' (Confidence: 64.7%, Dist: 0.317) - Live Verified
+[2026-08-06 17:55:52] [INFO] Recognized student 'OM' (Confidence: 64.7%, Dist: 0.317) - Live Verified
+[2026-08-06 17:55:54] [INFO] Recognized student 'OM' (Confidence: 64.7%, Dist: 0.317) - Live Verified
+[2026-08-06 17:56:01] [INFO] Unknown visitor detected (Confidence: 33.4%)
+[2026-08-06 17:56:03] [INFO] Unknown visitor detected (Confidence: 33.4%)
+[2026-08-06 17:56:04] [INFO] Unknown visitor detected (Confidence: 34.1%)
+[2026-08-06 17:56:05] [INFO] Unknown visitor detected (Confidence: 33.3%)
+[2026-08-06 17:56:07] [INFO] Unknown visitor detected (Confidence: 35.8%)
+[2026-08-06 17:56:08] [INFO] Unknown visitor detected (Confidence: 36.4%)
+[2026-08-06 17:56:09] [INFO] Unknown visitor detected (Confidence: 34.9%)
+[2026-08-06 17:56:11] [INFO] Unknown visitor detected (Confidence: 36.3%)
+[2026-08-06 17:56:16] [INFO] Unknown visitor detected (Confidence: 35.5%)
+[2026-08-06 17:58:36] [WARNING] Recognized student 'Amandeep' pending liveness verification (Checking Liveness...)
+[2026-08-06 17:58:38] [WARNING] Recognized student 'Amandeep' pending liveness verification (Checking Liveness...)
+[2026-08-06 17:58:40] [INFO] Recognized student 'Amandeep' (Confidence: 80.3%, Dist: 0.177) - Live Verified
+[2026-08-06 17:58:41] [INFO] Recognized student 'Amandeep' (Confidence: 82.7%, Dist: 0.155) - Live Verified
+[2026-08-06 17:58:43] [INFO] Recognized student 'Amandeep' (Confidence: 81.1%, Dist: 0.170) - Live Verified
+[2026-08-06 17:58:44] [INFO] Recognized student 'Amandeep' (Confidence: 77.0%, Dist: 0.207) - Live Verified
+[2026-08-06 17:58:55] [INFO] Unknown visitor detected (Confidence: 42.3%)
+[2026-08-06 17:58:57] [INFO] Unknown visitor detected (Confidence: 45.4%)
+[2026-08-06 17:59:02] [INFO] Unknown visitor detected (Confidence: 37.8%)
+[2026-08-06 17:59:04] [INFO] Unknown visitor detected (Confidence: 40.0%)
+[2026-08-06 17:59:05] [INFO] Unknown visitor detected (Confidence: 40.0%)
+[2026-08-06 17:59:07] [INFO] Unknown visitor detected (Confidence: 40.1%)
+[2026-08-06 17:59:15] [WARNING] Recognized student 'OM' pending liveness verification (Checking Liveness...)
+[2026-08-06 17:59:16] [WARNING] Recognized student 'OM' pending liveness verification (Checking Liveness...)
+[2026-08-06 17:59:20] [WARNING] Recognized student 'OM' pending liveness verification (Checking Liveness...)
+[2026-08-06 17:59:22] [INFO] Recognized student 'OM' (Confidence: 60.5%, Dist: 0.355) - Live Verified
+[2026-08-06 17:59:23] [WARNING] Recognized student 'OM' pending liveness verification (Checking Liveness...)
+[2026-08-06 17:59:25] [INFO] Recognized student 'OM' (Confidence: 60.2%, Dist: 0.358) - Live Verified
+[2026-08-06 17:59:26] [INFO] Recognized student 'OM' (Confidence: 60.1%, Dist: 0.359) - Live Verified
+[2026-08-06 17:59:32] [WARNING] Recognized student 'Amandeep' pending liveness verification (Checking Liveness...)
+[2026-08-06 17:59:34] [INFO] Recognized student 'Amandeep' (Confidence: 81.0%, Dist: 0.171) - Live Verified
+[2026-08-06 17:59:35] [INFO] Recognized student 'Amandeep' (Confidence: 78.3%, Dist: 0.195) - Live Verified
+[2026-08-06 17:59:37] [WARNING] Recognized student 'Amandeep' pending liveness verification (Checking Liveness...)
+[2026-08-06 17:59:39] [INFO] Recognized student 'Amandeep' (Confidence: 78.6%, Dist: 0.192) - Live Verified

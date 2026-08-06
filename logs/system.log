@@ -1,0 +1,29 @@
+[2026-08-06 16:45:10] [INFO] Camera stream thread started for source: http://192.168.18.142:81/stream
+[2026-08-06 16:45:11] [INFO] Connected successfully to stream source: http://192.168.18.142:81/stream
+[2026-08-06 16:45:11] [INFO] Camera stream thread stopped.
+[2026-08-06 16:47:35] [INFO] Camera stream thread started for source: http://192.168.18.142:81/stream
+[2026-08-06 16:47:37] [INFO] Connected successfully to stream source: http://192.168.18.142:81/stream
+[2026-08-06 16:47:37] [INFO] Camera stream thread stopped.
+[2026-08-06 16:51:19] [INFO] Startup checklist executed in 11363.1 ms. Status: ALL READY
+[2026-08-06 16:52:54] [INFO] Camera stream thread started for source: http://192.168.18.142:81/stream
+[2026-08-06 16:52:54] [INFO] Startup checklist executed in 240.5 ms. Status: ALL READY
+[2026-08-06 16:53:02] [INFO] Connected successfully to stream source: http://192.168.18.142:81/stream
+[2026-08-06 16:53:42] [INFO] Stream interrupted. Auto-reconnecting in 3.0s... (Attempt #1)
+[2026-08-06 16:53:45] [INFO] Connected successfully to stream source: http://192.168.18.142:81/stream
+[2026-08-06 16:54:00] [INFO] Stream interrupted. Auto-reconnecting in 3.0s... (Attempt #2)
+[2026-08-06 16:54:05] [INFO] Connected successfully to stream source: http://192.168.18.142:81/stream
+[2026-08-06 16:54:46] [INFO] Stream interrupted. Auto-reconnecting in 3.0s... (Attempt #3)
+[2026-08-06 16:54:52] [INFO] Connected successfully to stream source: http://192.168.18.142:81/stream
+[2026-08-06 16:55:23] [INFO] Stream interrupted. Auto-reconnecting in 3.0s... (Attempt #4)
+[2026-08-06 16:55:32] [INFO] Connected successfully to stream source: http://192.168.18.142:81/stream
+[2026-08-06 16:55:50] [INFO] Stream interrupted. Auto-reconnecting in 3.0s... (Attempt #5)
+[2026-08-06 16:55:55] [INFO] Connected successfully to stream source: http://192.168.18.142:81/stream
+[2026-08-06 17:00:00] [INFO] Stream interrupted. Auto-reconnecting in 3.0s... (Attempt #6)
+[2026-08-06 17:18:40] [INFO] Startup checklist executed in 78.2 ms. Status: ALL READY
+[2026-08-06 17:21:41] [INFO] Startup checklist executed in 18.7 ms. Status: ALL READY
+[2026-08-06 17:34:09] [INFO] Startup checklist executed in 7.1 ms. Status: ALL READY
+[2026-08-06 17:40:48] [INFO] Startup checklist executed in 13.4 ms. Status: ALL READY
+[2026-08-06 17:41:32] [INFO] Startup checklist executed in 7.7 ms. Status: ALL READY
+[2026-08-06 17:48:12] [INFO] Startup checklist executed in 8.2 ms. Status: ALL READY
+[2026-08-06 17:54:04] [INFO] Startup checklist executed in 5.8 ms. Status: ALL READY
+[2026-08-06 17:54:54] [INFO] Startup checklist executed in 12.2 ms. Status: ALL READY

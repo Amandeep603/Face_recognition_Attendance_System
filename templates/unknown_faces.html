@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unknown Faces Management - AI Face Attendance</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        .unknown-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+        }
+        .unknown-card {
+            border-radius: var(--radius-md);
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            overflow: hidden;
+            transition: var(--transition-normal);
+            position: relative;
+        }
+        .unknown-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-primary);
+            box-shadow: 0 12px 24px -6px rgba(0, 0, 0, 0.4);
+        }
+        .unknown-img-box {
+            width: 100%;
+            height: 180px;
+            background: var(--bg-tertiary);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .unknown-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .unknown-body {
+            padding: 14px;
+        }
+        .unknown-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(8px);
+            color: var(--warning);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="app-wrapper">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-icon">
+                    <i class="bi bi-person-bounding-box"></i>
+                </div>
+                <div class="brand-info">
+                    <h2>Face Attendance</h2>
+                    <span class="brand-badge">AI Powered</span>
+                </div>
+            </div>
+
+            <ul class="nav-menu">
+                <li>
+                    <a href="/" class="nav-link">
+                        <i class="bi bi-grid-1x2-fill"></i>
+                        <span>Live Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/register" class="nav-link">
+                        <i class="bi bi-person-plus-fill"></i>
+                        <span>Add Student</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/students" class="nav-link">
+                        <i class="bi bi-people-fill"></i>
+                        <span>Student Directory</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/analytics" class="nav-link">
+                        <i class="bi bi-graph-up-arrow"></i>
+                        <span>Analytics</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/unknown_faces" class="nav-link active">
+                        <i class="bi bi-person-exclamation"></i>
+                        <span>Unknown Faces</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/reports" class="nav-link">
+                        <i class="bi bi-file-earmark-bar-graph-fill"></i>
+                        <span>Reports</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/diagnostics" class="nav-link">
+                        <i class="bi bi-cpu-fill"></i>
+                        <span>System Test</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <a href="/" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: center;">
+                    <i class="bi bi-arrow-left"></i> Live Stream Feed
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="topbar">
+                <div class="page-title">
+                    <h1>Unknown Visitors Log</h1>
+                    <p>Unrecognized face captures automatically logged by the camera stream</p>
+                </div>
+                <div class="topbar-actions">
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <label for="dateFilter" style="font-size: 13px; color: var(--text-secondary);">Filter Date:</label>
+                        <input type="date" id="dateFilter" class="form-control" style="width: 160px; padding: 6px 10px;">
+                        <button class="btn btn-secondary" onclick="loadUnknownFaces()">
+                            <i class="bi bi-arrow-clockwise"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Gallery Grid -->
+            <div id="unknownGallery" class="unknown-gallery">
+                <div class="glass-card" style="grid-column: 1 / -1; padding: 30px; text-align: center; color: var(--text-muted);">
+                    <i class="bi bi-hourglass-split" style="font-size: 28px; display: block; margin-bottom: 8px;"></i>
+                    Loading unknown captures...
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Convert to Student Modal -->
+    <div class="modal-overlay" id="convertModal" style="display: none;">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 style="font-size: 18px; font-weight: 700; color: var(--text-primary);">
+                    <i class="bi bi-person-check-fill" style="color: var(--accent-primary);"></i> Enroll Unknown as Student
+                </h3>
+                <button class="modal-close-btn" onclick="closeConvertModal()">&times;</button>
+            </div>
+            <div class="modal-body" style="padding: 16px 0;">
+                <div style="display: flex; gap: 16px; align-items: center; margin-bottom: 16px;">
+                    <div style="width: 80px; height: 80px; border-radius: 8px; overflow: hidden; background: #000;">
+                        <img id="convertPreviewImg" src="" alt="Unknown Face" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div>
+                        <div style="font-size: 12px; color: var(--text-muted);" id="convertRecordMeta">ID: --</div>
+                        <div style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">
+                            Enter the student's name to register this face into the database.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="newStudentName">Student Full Name</label>
+                    <input type="text" id="newStudentName" class="form-control" placeholder="e.g. John Doe" required autofocus>
+                </div>
+            </div>
+            <div class="modal-footer" style="display: flex; justify-content: flex-end; gap: 10px;">
+                <button class="btn btn-secondary" onclick="closeConvertModal()">Cancel</button>
+                <button class="btn btn-primary" id="btnConfirmConvert" onclick="confirmConversion()">
+                    <i class="bi bi-check2-circle"></i> Save & Retrain AI
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/unknown_faces.js"></script>
+</body>
+</html>

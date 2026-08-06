@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Face Recognition Attendance System</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="app-wrapper">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-icon">
+                    <i class="bi bi-person-bounding-box"></i>
+                </div>
+                <div class="brand-info">
+                    <h2>Face Attendance</h2>
+                    <span class="brand-badge">AI Powered</span>
+                </div>
+            </div>
+
+            <ul class="nav-menu">
+                <li>
+                    <a href="/" class="nav-link active">
+                        <i class="bi bi-grid-1x2-fill"></i>
+                        <span>Live Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/register" class="nav-link">
+                        <i class="bi bi-person-plus-fill"></i>
+                        <span>Add Student</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/students" class="nav-link">
+                        <i class="bi bi-people-fill"></i>
+                        <span>Student Directory</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/analytics" class="nav-link">
+                        <i class="bi bi-graph-up-arrow"></i>
+                        <span>Analytics</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/unknown_faces" class="nav-link">
+                        <i class="bi bi-person-exclamation"></i>
+                        <span>Unknown Faces</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/reports" class="nav-link">
+                        <i class="bi bi-file-earmark-bar-graph-fill"></i>
+                        <span>Reports</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/diagnostics" class="nav-link">
+                        <i class="bi bi-cpu-fill"></i>
+                        <span>System Test</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <button class="theme-toggle-btn" id="themeToggleBtn">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <i class="bi bi-sun-fill"></i>
+                        <span>Light Theme</span>
+                    </div>
+                    <i class="bi bi-arrow-left-right" style="font-size: 11px; opacity: 0.6;"></i>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Topbar -->
+            <header class="topbar">
+                <div class="page-title">
+                    <h1>Live Attendance Dashboard</h1>
+                    <p>Real-time AI Face Recognition & Automated Attendance Monitoring</p>
+                </div>
+                <div class="topbar-actions">
+                    <div class="live-clock-card">
+                        <i class="bi bi-clock-fill" style="color: var(--accent-primary);"></i>
+                        <span class="clock-time" id="liveClockTime">00:00:00</span>
+                        <span class="clock-date" id="liveClockDate">Thu, Aug 6</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- 4 KPI Stats Cards -->
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <span class="stat-label">Total Registered</span>
+                        <div class="stat-value" id="statRegistered">0</div>
+                        <span class="stat-sub">Enrolled Students</span>
+                    </div>
+                    <div class="stat-icon-wrapper icon-purple">
+                        <i class="bi bi-person-badge-fill"></i>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <span class="stat-label">Present Today</span>
+                        <div class="stat-value" id="statPresent" style="color: var(--success);">0</div>
+                        <span class="stat-sub">Attendance Marked</span>
+                    </div>
+                    <div class="stat-icon-wrapper icon-green">
+                        <i class="bi bi-check-all"></i>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <span class="stat-label">Absent / Pending</span>
+                        <div class="stat-value" id="statAbsent" style="color: var(--warning);">0</div>
+                        <span class="stat-sub">Yet to Arrive</span>
+                    </div>
+                    <div class="stat-icon-wrapper icon-amber">
+                        <i class="bi bi-hourglass-split"></i>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <span class="stat-label">Unknown Detections</span>
+                        <div class="stat-value" id="statUnknown" style="color: var(--danger);">0</div>
+                        <span class="stat-sub">Unregistered Faces</span>
+                    </div>
+                    <div class="stat-icon-wrapper icon-red">
+                        <i class="bi bi-shield-exclamation"></i>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Main Split Workspace -->
+            <div class="dashboard-layout">
+                <!-- Left: Live ESP32-CAM Camera Feed -->
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-title-group">
+                            <i class="bi bi-camera-video-fill"></i>
+                            <h3>Live Camera Stream</h3>
+                        </div>
+                        <div style="display: flex; gap: 8px;">
+                            <button class="btn btn-secondary btn-sm" onclick="promptChangeSource()">
+                                <i class="bi bi-gear-fill"></i> Stream Settings
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="camera-container" id="cameraContainer">
+                        <img src="/video_feed" alt="ESP32-CAM Live Feed" class="camera-feed" id="liveVideo">
+                        
+                        <!-- High-Tech Camera HUD Overlay -->
+                        <div class="camera-hud">
+                            <div class="hud-left">
+                                <div class="status-badge">
+                                    <span class="status-dot connecting" id="cameraStatusDot"></span>
+                                    <span id="cameraStatusText">CONNECTING</span>
+                                </div>
+                                <div class="hud-metric" id="cameraFps">0.0 FPS</div>
+                                <div class="hud-metric" id="cameraLatency">0 ms</div>
+                                <div class="hud-metric" id="lastRecMetric" style="color: #6ee7b7;">Last: <span id="lastRecTime">--:--:--</span></div>
+                            </div>
+                            <div class="hud-right">
+                                <button class="hud-btn" id="fullscreenBtn" title="Toggle Fullscreen">
+                                    <i class="bi bi-fullscreen"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="camera-controls-bar">
+                        <span class="camera-source-info">
+                            <i class="bi bi-broadcast"></i> Source: <span id="currentSourceLabel">{{ camera_source }}</span>
+                        </span>
+                        <a href="/register" class="btn btn-primary btn-sm">
+                            <i class="bi bi-person-plus-fill"></i> Register New Face
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right: Today's Attendance Panel -->
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-title-group">
+                            <i class="bi bi-card-checklist"></i>
+                            <h3 id="panelTitle">Today's Attendance</h3>
+                        </div>
+                        <button class="btn btn-danger-outline btn-sm" onclick="confirmResetAttendance()">
+                            <i class="bi bi-arrow-counterclockwise"></i> Reset Today
+                        </button>
+                    </div>
+
+                    <div class="attendance-panel-body">
+                        <!-- Search & Date Filter Bar -->
+                        <div class="search-filter-bar">
+                            <div class="search-input-wrapper">
+                                <i class="bi bi-search"></i>
+                                <input type="text" id="attendanceSearch" class="search-input" placeholder="Search student name...">
+                            </div>
+                            <input type="date" id="attendanceDateFilter" class="date-filter-input" title="Filter by date">
+                        </div>
+
+                        <!-- Table -->
+                        <div class="table-scroll-container">
+                            <table class="custom-table">
+                                <thead>
+                                    <tr>
+                                        <th>Student</th>
+                                        <th>Time</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="attendanceTableBody">
+                                    <!-- Dynamic Rows (Latest 20) -->
+                                </tbody>
+                            </table>
+                            <div id="tableEmptyState" class="empty-state">
+                                <i class="bi bi-inbox"></i>
+                                <p id="emptyStateText">No attendance recorded today yet.</p>
+                                <span style="font-size: 11px; opacity: 0.7;">Faces recognized on camera will appear here instantly.</span>
+                            </div>
+                        </div>
+
+                        <!-- Footer Actions: CSV & Excel Export -->
+                        <div class="panel-footer-actions">
+                            <a href="/api/attendance/export/csv" id="btnExportCsv" class="btn btn-secondary btn-sm">
+                                <i class="bi bi-filetype-csv"></i> Download CSV
+                            </a>
+                            <a href="/api/attendance/export/excel" id="btnExportExcel" class="btn btn-primary btn-sm">
+                                <i class="bi bi-file-earmark-excel-fill"></i> Download Excel
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Custom Confirmation Modal Dialog -->
+    <div class="modal-overlay" id="customModal">
+        <div class="modal-card">
+            <h3 id="modalTitle">Confirm Action</h3>
+            <p id="modalMessage">Are you sure you want to perform this action?</p>
+            <div class="modal-actions">
+                <button class="btn btn-secondary btn-sm" id="modalCancelBtn">Cancel</button>
+                <button class="btn btn-primary btn-sm" id="modalConfirmBtn" style="background: var(--danger);">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/static/js/main.js"></script>
+</body>
+</html>

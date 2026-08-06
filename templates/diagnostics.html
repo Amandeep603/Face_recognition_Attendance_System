@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Diagnostics & Test Suite - AI Face Attendance</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        .diag-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        .diag-hero {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 24px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .diag-stats-pills {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+        .stat-pill {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            padding: 10px 18px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .stat-pill i {
+            font-size: 1.25rem;
+        }
+        .pill-val {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #f8fafc;
+        }
+        .pill-lbl {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .test-card {
+            background: rgba(15, 23, 42, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
+            padding: 18px 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.2s ease;
+        }
+        .test-card:hover {
+            border-color: rgba(99, 102, 241, 0.3);
+            background: rgba(15, 23, 42, 0.85);
+        }
+        .test-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .test-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: #64748b;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 6px 10px;
+            border-radius: 8px;
+        }
+        .test-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #f1f5f9;
+        }
+        .test-desc {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-top: 3px;
+        }
+        .test-badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .badge-pass {
+            background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+        .badge-fail {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+        .badge-pending {
+            background: rgba(148, 163, 184, 0.15);
+            color: #94a3b8;
+            border: 1px solid rgba(148, 163, 184, 0.3);
+        }
+        .badge-running {
+            background: rgba(99, 102, 241, 0.15);
+            color: #818cf8;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+        }
+        .log-console {
+            background: #090d16;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 18px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+            color: #38bdf8;
+            max-height: 280px;
+            overflow-y: auto;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body class="dark-theme">
+    <div class="app-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-camera-viewfinder"></i>
+                </div>
+                <div class="logo-text">
+                    <h2>VisionAttend</h2>
+                    <span class="badge-pro">ENTERPRISE</span>
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="/" class="nav-item">
+                    <i class="fa-solid fa-video"></i>
+                    <span>Live Stream</span>
+                </a>
+                <a href="/register" class="nav-item">
+                    <i class="fa-solid fa-user-plus"></i>
+                    <span>Add Student</span>
+                </a>
+                <a href="/students" class="nav-item">
+                    <i class="fa-solid fa-address-book"></i>
+                    <span>Student Roster</span>
+                </a>
+                <a href="/analytics" class="nav-item">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Analytics</span>
+                </a>
+                <a href="/unknown_faces" class="nav-item">
+                    <i class="fa-solid fa-user-secret"></i>
+                    <span>Unknown Faces</span>
+                </a>
+                <a href="/reports" class="nav-item">
+                    <i class="fa-solid fa-file-invoice"></i>
+                    <span>Reports</span>
+                </a>
+                <a href="/diagnostics" class="nav-item active">
+                    <i class="fa-solid fa-microchip"></i>
+                    <span>System Test</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="system-status-indicator online">
+                    <span class="pulse-dot"></span>
+                    <span class="status-label">ESP32 Online</span>
+                </div>
+                <button class="theme-toggle-btn" id="themeToggleBtn" title="Toggle Theme">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-left">
+                    <h1>Automated System Diagnostics & Health Suite</h1>
+                    <p class="subtitle">Real-time hardware verification, AI latency benchmarks, and pipeline integrity tests</p>
+                </div>
+                <div class="header-right">
+                    <button class="btn btn-primary" id="runDiagBtn" onclick="runDiagnostics()">
+                        <i class="fa-solid fa-play"></i> Run Full System Test
+                    </button>
+                    <button class="btn btn-secondary" id="exportDiagBtn" onclick="exportDiagnosticReport()" disabled>
+                        <i class="fa-solid fa-download"></i> Export JSON
+                    </button>
+                </div>
+            </header>
+
+            <div class="content-body">
+                <div class="diag-grid">
+                    <!-- Top Diagnostics Hero Scorecard -->
+                    <div class="diag-hero">
+                        <div>
+                            <span class="badge" id="overallStatusBadge" style="background: rgba(99,102,241,0.2); color: #818cf8; border: 1px solid rgba(99,102,241,0.4); padding: 6px 16px; font-weight: 700;">
+                                <i class="fa-solid fa-circle-notch fa-spin"></i> READY FOR TEST
+                            </span>
+                            <h2 style="margin: 10px 0 4px 0; font-size: 1.4rem;" id="diagSummaryText">10-Point End-to-End Self Diagnostics</h2>
+                            <p style="color: #94a3b8; font-size: 0.85rem; margin: 0;" id="lastRunTime">Click "Run Full System Test" to initiate automated validation</p>
+                        </div>
+                        <div class="diag-stats-pills">
+                            <div class="stat-pill">
+                                <i class="fa-solid fa-circle-check" style="color: #10b981;"></i>
+                                <div>
+                                    <div class="pill-val" id="pillPassed">-</div>
+                                    <div class="pill-lbl">Passed</div>
+                                </div>
+                            </div>
+                            <div class="stat-pill">
+                                <i class="fa-solid fa-circle-xmark" style="color: #ef4444;"></i>
+                                <div>
+                                    <div class="pill-val" id="pillFailed">-</div>
+                                    <div class="pill-lbl">Failed</div>
+                                </div>
+                            </div>
+                            <div class="stat-pill">
+                                <i class="fa-solid fa-stopwatch" style="color: #38bdf8;"></i>
+                                <div>
+                                    <div class="pill-val" id="pillDuration">-</div>
+                                    <div class="pill-lbl">Duration</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Test Items Container -->
+                    <div id="testItemsContainer" style="display: flex; flex-direction: column; gap: 12px;">
+                        <!-- Diagnostic cards injected here dynamically by diagnostics.js -->
+                    </div>
+
+                    <!-- Live Diagnostics Console -->
+                    <div style="margin-top: 10px;">
+                        <h3 style="font-size: 1rem; color: #f8fafc; margin-bottom: 10px; display: flex; align-items: center; gap: 8px;">
+                            <i class="fa-solid fa-terminal" style="color: #38bdf8;"></i> Diagnostic Console Output
+                        </h3>
+                        <div class="log-console" id="logConsole">
+                            [System] Ready. Click "Run Full System Test" to begin automated verification across ESP32-CAM stream, Face Engine, Attendance Manager, Anti-Spoofing, and Exporters.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/static/js/theme.js"></script>
+    <script src="/static/js/diagnostics.js"></script>
+</body>
+</html>
