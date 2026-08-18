@@ -2,7 +2,7 @@ import cv2
 import sys
 
 # ESP32-CAM Stream URL
-STREAM_URL = "http://192.168.43.105/capture"
+STREAM_URL = "http://192.168.18.142/capture"
 WINDOW_NAME = "ESP32-CAM Stream"
 
 def main():

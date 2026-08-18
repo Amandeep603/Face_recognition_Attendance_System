@@ -327,7 +327,7 @@ function confirmResetAttendance() {
 }
 
 function promptChangeSource() {
-    const currentSrc = currentStats.camera?.source || "http://192.168.43.105/capture";
+    const currentSrc = currentStats.camera?.source || "http://192.168.18.142/capture";
     const newSrc = prompt("Enter ESP32-CAM stream URL or '0' for local webcam:", currentSrc);
     if (newSrc && newSrc.trim() !== "") {
         fetch('/api/camera/source', {

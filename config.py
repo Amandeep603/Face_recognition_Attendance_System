@@ -26,7 +26,7 @@ LOGS_FOLDER = LOGS_DIR
 ENCODINGS_FILE = os.path.join(BASE_DIR, "encodings.pkl")
 
 # Camera Stream Configuration (ESP32-CAM & Local Fallback)
-CAMERA_URL = "http://192.168.43.105/capture"
+CAMERA_URL = "http://192.168.18.142/capture"
 ESP32_STREAM_URL = CAMERA_URL
 CAMERA_SOURCE = CAMERA_URL           # Default camera source (ESP32 URL or 0 for local webcam)
 CAPTURE_MODE = True                  # True = poll /capture snapshots, False = MJPEG /stream

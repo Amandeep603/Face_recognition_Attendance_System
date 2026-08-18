@@ -4,7 +4,7 @@ color 0b
 
 echo ==============================================================================
 echo   AI Face Recognition Attendance System (Enterprise Edition)
-echo   Target Stream: http://192.168.43.105/capture (Capture Mode)
+echo   Target Stream: http://192.168.18.142/capture (Capture Mode)
 echo ==============================================================================
 echo.
 

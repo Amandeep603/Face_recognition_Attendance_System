@@ -56,7 +56,7 @@ def test_environment():
         return False
 
     # Test 6: Stream URL verification (non-blocking)
-    stream_url = "http://192.168.43.105/capture"
+    stream_url = "http://192.168.18.142/capture"
     print(f"[6/6] Checking Stream URL .. {stream_url}")
     try:
         cap = cv2.VideoCapture(stream_url)
